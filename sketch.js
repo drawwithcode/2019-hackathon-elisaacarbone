@@ -7,7 +7,7 @@ var analyzer;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(240);
+  background(0);
   song = loadSound("assets/TG1_new.mp3");
 
   video = createVideo(['assets/TV Static.mp4'], videoLoaded);
@@ -18,15 +18,18 @@ function setup() {
 
   noStroke();
   fill('STEELBLUE');
-  rect(0, height/2, width, height, 10); //tavolo
+  rect(0, height/2, width, 100, 10); //tavolo
 
   rectMode(CENTER);
-  fill('DARKSLATEGRAY');
+  fill('#85929e');
   rect(width / 2 + 300, height / 2 - 75, 200, 150, 10); //radio
   rect(width / 2 - 100, height / 2 - 175, 550, 350, 10); //television
   rect(width / 2 - 100, height / 2 + 550, 200, 500, 20); //controller
   fill('BLACK');
   rect(width / 2 - 100, height / 2 - 175, 474, 266); //screen
+  rect(width / 2 + 300, height / 2 - 90, 150, 5, 20); //radio lines
+  rect(width / 2 + 300, height / 2 - 110, 150, 5, 20); //radio lines
+  rect(width / 2 + 300, height / 2 - 130, 150, 5, 20); //radio lines
 
 }
 
@@ -45,7 +48,8 @@ function basic() {
   volume = map(volume, 0, 1, 0, height);
 
   noFill();
-  arc(width / 2 + 300, height / 2 - 150, volume*1.5, volume*1.5, PI, TWO_PI, PIE);
+  stroke(255);
+  arc(width / 2 + 300, height / 2 - 150, volume*2, volume*2, PI, TWO_PI, OPEN);
 }
 
 function videoLoaded() { //once the video is loaded the on off button will appear
@@ -64,11 +68,17 @@ function videoStarts() {
     k = 0;
     video.loop();
     loaded();
+    text();
 } else if (k == 0) {
     on.html("ON");
     k = 1;
     video.stop();
   }
+}
+
+function text() {
+  fill(255);
+  text("Nothing to see here kids, try on the radio", width/2, height/2 + 100);
 }
 
 function loaded() { //once the TV is on the play/pause button will appear
