@@ -30,7 +30,6 @@ function setup() {
   rect(width / 2 + 300, height / 2 - 90, 150, 5, 20); //radio lines
   rect(width / 2 + 300, height / 2 - 110, 150, 5, 20); //radio lines
   rect(width / 2 + 300, height / 2 - 130, 150, 5, 20); //radio lines
-
 }
 
 function draw() {
@@ -42,9 +41,10 @@ function draw() {
   basic();
 
   push();
-  fill('red');
+  fill(255);
   noStroke();
-  textSize(18)
+  textSize(15)
+  textFont('Roboto Mono')
   textAlign(CENTER, CENTER)
   text("Turn on the TV to see the news, get creative if it doesn't work", width/2 - 100, height/2 + 250);
   pop();
