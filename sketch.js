@@ -1,41 +1,61 @@
+
+var song;
+var play;
 var video;
 var k = 0;
-
-function preload() {
-  // put preload code here
-}
+var analyzer;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight, WEBGL);
-  background(40);
+  createCanvas(windowWidth, windowHeight);
+  background(240);
   song = loadSound("assets/TG1_new.mp3");
 
   video = createVideo(['assets/TV Static.mp4'], videoLoaded);
   video.hide();
+
+  analyzer = new p5.Amplitude();
+  analyzer.setInput(song);
+
+  noStroke();
+  fill('STEELBLUE');
+  rect(0, height/2, width, height, 10); //tavolo
+
+  rectMode(CENTER);
+  fill('DARKSLATEGRAY');
+  rect(width / 2 + 300, height / 2 - 75, 200, 150, 10); //radio
+  rect(width / 2 - 100, height / 2 - 175, 550, 350, 10); //television
+  rect(width / 2 - 100, height / 2 + 550, 200, 500, 20); //controller
+  fill('BLACK');
+  rect(width / 2 - 100, height / 2 - 175, 474, 266); //screen
+
 }
 
 function draw() {
-  translate(-width/2, -height/2, 0);
+  //video
+  imageMode(CENTER);
+  image(video, width / 2 - 100, height / 2 - 175, 474, 266);
+
   videoLoaded();
+  basic();
 }
 
-function videoLoaded() { //once the song is loaded the play/pause button will appear
-  on = createButton("ON");
+function basic() {
+  //define the volume function
+  volume = analyzer.getLevel();
+  volume = map(volume, 0, 1, 0, height);
 
-  on.position(width / 2 - 25, height / 2 + 230);
+  noFill();
+  arc(width / 2 + 300, height / 2 - 150, volume*1.5, volume*1.5, PI, TWO_PI, PIE);
+}
+
+function videoLoaded() { //once the video is loaded the on off button will appear
+  on = createButton("O");
+
+  on.position(width / 2 - 125, height / 2 + 330);
   on.size(50);
 
-  //when the button is pressed, the function togglePlaying is called
+  //when the button is pressed, the function videoStarts is called
   on.mousePressed(videoStarts);
-
-  rectMode(CENTER);
-  fill(0);
-  rect(width / 2, height / 2 - 200, 550, 350, 10); //television
-  rect(width / 2, height / 2 - 200, 474, 266); //screen
-  rect(width / 2, height / 2 + 450, 200, 500, 20); //controller
-
-  imageMode(CENTER);
-  image(video, width / 2, height / 2 - 200, 474, 266);
 }
 
 function videoStarts() {
@@ -44,19 +64,17 @@ function videoStarts() {
     k = 0;
     video.loop();
     loaded();
-  } else if (k == 0) {
+} else if (k == 0) {
     on.html("ON");
     k = 1;
-    song.stop();
     video.stop();
-    play.remove();
   }
 }
 
-function loaded() { //once the song is loaded the play/pause button will appear
+function loaded() { //once the TV is on the play/pause button will appear
   play = createButton("PLAY");
 
-  play.position(width / 2 - 40, height / 2 + 270);
+  play.position(width / 2 + 260, height / 2 - 65);
   play.size(80);
 
   //when the button is pressed, the function togglePlaying is called
@@ -68,12 +86,8 @@ function togglePlaying() {
   if (!song.isPlaying()) { //if the song is not playing, by clicking the button it starts
     song.loop();
     play.html("PAUSE");
-    a = 1
-    video.stop();
   } else { //if the song is already playing, if you press the button it pauses
     song.pause();
     play.html("PLAY");
-    a = 0;
-    video.loop();
   }
 }
