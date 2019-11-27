@@ -7,7 +7,7 @@ var analyzer;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(0);
+  background(40);
   song = loadSound("assets/TG1_new.mp3");
 
   video = createVideo(['assets/TV Static.mp4'], videoLoaded);
@@ -17,8 +17,8 @@ function setup() {
   analyzer.setInput(song);
 
   noStroke();
-  fill('STEELBLUE');
-  rect(0, height/2, width, 100, 10); //tavolo
+  fill('#9c640c');
+  rect(0, height/2, width, 100); //tavolo
 
   rectMode(CENTER);
   fill('#85929e');
@@ -40,7 +40,16 @@ function draw() {
 
   videoLoaded();
   basic();
+
+  push();
+  fill('red');
+  noStroke();
+  textSize(18)
+  textAlign(CENTER, CENTER)
+  text("Turn on the TV to see the news, get creative if it doesn't work", width/2 - 100, height/2 + 250);
+  pop();
 }
+
 
 function basic() {
   //define the volume function
@@ -68,17 +77,11 @@ function videoStarts() {
     k = 0;
     video.loop();
     loaded();
-    text();
 } else if (k == 0) {
     on.html("ON");
     k = 1;
     video.stop();
   }
-}
-
-function text() {
-  fill(255);
-  text("Nothing to see here kids, try on the radio", width/2, height/2 + 100);
 }
 
 function loaded() { //once the TV is on the play/pause button will appear
