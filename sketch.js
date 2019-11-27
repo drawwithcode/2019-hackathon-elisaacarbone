@@ -44,9 +44,10 @@ function draw() {
   fill(255);
   noStroke();
   textSize(15)
-  textFont('Roboto Mono')
+
   textAlign(CENTER, CENTER)
   text("Turn on the TV to see the news, get creative if it doesn't work", width/2 - 100, height/2 + 250);
+  textFont('Roboto Mono');
   pop();
 }
 
